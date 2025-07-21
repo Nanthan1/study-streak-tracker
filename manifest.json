@@ -8,24 +8,19 @@
   "icons": [
     {
       "src": "./doggo.jpg",
-      "sizes": "192x192",
+      "sizes": "273x254",
       "type": "image/jpg"
-    },
-    {
-      "src": "icon.png",
-      "sizes": "512x512",
-      "type": "image/png"
     }
   ],
   "screenshots": [
   {
-    "src": "screenshot-wide.png",
+    "src": "./screenshot-wide.png",
     "sizes": "1024x768",
     "type": "image/png",
     "form_factor": "wide"
   },
   {
-    "src": "screenshot-mobile.png",
+    "src": "./screenshot-mobile.png",
     "sizes": "360x740",
     "type": "image/png"
   }
