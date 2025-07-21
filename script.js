@@ -82,10 +82,20 @@ function renderCalendar() {
       else box.classList.add("level-1");
     }
 
-    if (streak[key]) {
-  const subjects = Array.isArray(streak[key]) ? streak[key] : [streak[key]];
+   if (streak[key]) {
+  let subjects = [];
+
+  if (Array.isArray(streak[key])) {
+    subjects = streak[key];
+  } else if (typeof streak[key] === "string") {
+    subjects = [streak[key]];
+  } else if (typeof streak[key] === "object" && streak[key] !== null) {
+    subjects = Object.values(streak[key]); // handles { subject: "Math" }
+  }
+
   box.title = subjects.join(", ");
 }
+
 calendar.appendChild(box);
 
     date.setDate(date.getDate() + 1);
