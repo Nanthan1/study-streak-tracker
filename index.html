@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Study Streak Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📚 Study Streak Tracker</h1>
+
+   <div class="timer">
+  <h2>Study Timer</h2>
+  <label for="duration">Set Timer (minutes):</label>
+  <input type="number" id="duration" min="1" value="25" />
+  <p id="timerDisplay">25:00</p>
+  <button id="startTimer">Start</button>
+  <button id="endEarly">End Early</button>
+</div>
+
+<div class="stats">
+  <p>Total Active Days: <span id="totalDays">0</span></p>
+</div>
+
+
+    <div class="streak-calendar">
+      <h2>Streak Calendar</h2>
+      <div id="calendar"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
