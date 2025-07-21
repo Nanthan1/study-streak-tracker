@@ -12,12 +12,26 @@
 
    <div class="timer">
   <h2>Study Timer</h2>
+
+  <label for="subject">Subject:</label>
+  <select id="subject">
+    <option value="Economics">Economics</option>
+    <option value="Business studies">Business studies</option>
+    <option value="Accountancy">Accountancy</option>
+    <option value="English">English</option>
+    <option value="Maths">Maths</option>
+  </select>
+
+  <br/><br/>
+
   <label for="duration">Set Timer (minutes):</label>
   <input type="number" id="duration" min="1" value="25" />
+
   <p id="timerDisplay">25:00</p>
   <button id="startTimer">Start</button>
   <button id="endEarly">End Early</button>
 </div>
+
 
 <div class="stats">
   <p>Total Active Days: <span id="totalDays">0</span></p>

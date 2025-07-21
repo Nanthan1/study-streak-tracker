@@ -47,10 +47,17 @@ function endEarly() {
 
 function markStreak() {
   const todayKey = new Date().toISOString().split("T")[0];
-  streak[todayKey] = (streak[todayKey] || 0) + 1;
+  const selectedSubject = document.getElementById("subject").value;
+
+  if (!streak[todayKey]) {
+    streak[todayKey] = [];
+  }
+
+  streak[todayKey].push(selectedSubject); // Track multiple sessions per day
   localStorage.setItem("streak", JSON.stringify(streak));
   renderCalendar();
 }
+
 
 function renderCalendar() {
   calendar.innerHTML = "";
@@ -75,7 +82,11 @@ function renderCalendar() {
       else box.classList.add("level-1");
     }
 
-    calendar.appendChild(box);
+    if (streak[key]) {
+  box.title = streak[key].join(", ");
+}
+calendar.appendChild(box);
+
     date.setDate(date.getDate() + 1);
   }
 
