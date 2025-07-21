@@ -93,7 +93,20 @@ function renderCalendar() {
     subjects = Object.values(streak[key]); // handles { subject: "Math" }
   }
 
+  if (streak[key]) {
+  let subjects = [];
+
+  if (Array.isArray(streak[key])) {
+    subjects = streak[key];
+  } else if (typeof streak[key] === "string") {
+    subjects = [streak[key]];
+  } else if (typeof streak[key] === "object" && streak[key] !== null) {
+    subjects = Object.values(streak[key]);
+  }
+
   box.title = subjects.join(", ");
+}
+
 }
 
 calendar.appendChild(box);
