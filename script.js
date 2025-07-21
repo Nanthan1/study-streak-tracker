@@ -83,7 +83,8 @@ function renderCalendar() {
     }
 
     if (streak[key]) {
-  box.title = streak[key].join(", ");
+  const subjects = Array.isArray(streak[key]) ? streak[key] : [streak[key]];
+  box.title = subjects.join(", ");
 }
 calendar.appendChild(box);
 
