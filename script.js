@@ -72,7 +72,7 @@ function markStreak() {
   streak[todayKey].push(selectedSubject); // Track multiple sessions per day
   localStorage.setItem("streak", JSON.stringify(streak));
   renderCalendar();
-  document.getElementById("subject").value = ""; // Clear after use
+  document.getElementById("subject").selectedIndex = 0; // Clear after use
 
 }
 

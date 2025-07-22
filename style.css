@@ -61,22 +61,11 @@ button {
   background-color: #216e39;
 }
 
-
-.day {
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  background: #ddd;
-  border-radius: 5px;
-}
-
-.day.active {
-  background: #4caf50;
-  color: white;
-}
-
-.active-day {
+.day.active-day {
   background-color: #4caf50;
-  color: white;
-  border-radius: 4px;
+}
+
+.day:hover {
+  outline: 1px solid #333;
+  cursor: pointer;
 }
