@@ -74,3 +74,9 @@ button {
   background: #4caf50;
   color: white;
 }
+
+.active-day {
+  background-color: #4caf50;
+  color: white;
+  border-radius: 4px;
+}

@@ -6,15 +6,24 @@ const totalDaysDisplay = document.getElementById('totalDays');
 let timer = null;
 let timeLeft = 0;
 let streak = JSON.parse(localStorage.getItem("streak") || "{}");
+if (!display || !calendar || !durationInput || !totalDaysDisplay) {
+  console.error("Missing required DOM elements. Check your HTML.");
+  return;
+}
 
 function updateDisplay() {
   const mins = String(Math.floor(timeLeft / 60)).padStart(2, '0');
   const secs = String(timeLeft % 60).padStart(2, '0');
   display.textContent = `${mins}:${secs}`;
 }
+function setTimerButtons(running) {
+  document.getElementById("startTimer").disabled = running;
+  document.getElementById("endEarly").disabled = !running;
+}
 
 function startTimer() {
   if (timer) return;
+  setTimerButtons(true);
 
   const minutes = parseInt(durationInput.value);
   if (isNaN(minutes) || minutes < 1) {
@@ -33,6 +42,8 @@ function startTimer() {
       clearInterval(timer);
       timer = null;
       markStreak();
+      setTimerButtons(false);
+
     }
   }, 1000);
 }
@@ -47,7 +58,12 @@ function endEarly() {
 
 function markStreak() {
   const todayKey = new Date().toISOString().split("T")[0];
-  const selectedSubject = document.getElementById("subject").value;
+  const selectedSubject = document.getElementById("subject").value.trim();
+
+  if (!selectedSubject) {
+    alert("Please enter a subject before ending the session.");
+    return;
+  }
 
   if (!streak[todayKey]) {
     streak[todayKey] = [];
@@ -56,8 +72,9 @@ function markStreak() {
   streak[todayKey].push(selectedSubject); // Track multiple sessions per day
   localStorage.setItem("streak", JSON.stringify(streak));
   renderCalendar();
-}
+  document.getElementById("subject").value = ""; // Clear after use
 
+}
 
 function renderCalendar() {
   calendar.innerHTML = "";
@@ -70,52 +87,41 @@ function renderCalendar() {
   let date = new Date(yearAgo);
   while (date <= today) {
     const key = date.toISOString().split("T")[0];
-    const level = streak[key] || 0;
 
     const box = document.createElement("div");
     box.classList.add("day");
 
-    if (level > 0) {
-      if (level >= 4) box.classList.add("level-4");
-      else if (level === 3) box.classList.add("level-3");
-      else if (level === 2) box.classList.add("level-2");
-      else box.classList.add("level-1");
+    if (streak[key]) {
+      box.classList.add("active-day");
+
+      let subjects = [];
+
+      if (Array.isArray(streak[key])) {
+        subjects = streak[key];
+      } else if (typeof streak[key] === "string") {
+        subjects = [streak[key]];
+      } else if (typeof streak[key] === "object" && streak[key] !== null) {
+        subjects = Object.values(streak[key]);
+      }
+
+      box.title = subjects.join(", ");
     }
 
-   if (streak[key]) {
-  let subjects = [];
-
-  if (Array.isArray(streak[key])) {
-    subjects = streak[key];
-  } else if (typeof streak[key] === "string") {
-    subjects = [streak[key]];
-  } else if (typeof streak[key] === "object" && streak[key] !== null) {
-    subjects = Object.values(streak[key]); // handles { subject: "Math" }
-  }
-
-  if (streak[key]) {
-  let subjects = [];
-
-  if (Array.isArray(streak[key])) {
-    subjects = streak[key];
-  } else if (typeof streak[key] === "string") {
-    subjects = [streak[key]];
-  } else if (typeof streak[key] === "object" && streak[key] !== null) {
-    subjects = Object.values(streak[key]);
-  }
-
-  box.title = subjects.join(", ");
-}
-
-}
-
-calendar.appendChild(box);
-
+    calendar.appendChild(box);
     date.setDate(date.getDate() + 1);
   }
 
   totalDaysDisplay.textContent = totalActive;
 }
+
+function downloadStreak() {
+  const blob = new Blob([JSON.stringify(streak, null, 2)], { type: 'application/json' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'streak.json';
+  link.click();
+}
+
 
 updateDisplay();
 renderCalendar();

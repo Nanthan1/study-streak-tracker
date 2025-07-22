@@ -1,14 +1,16 @@
 const CACHE_NAME = 'study-streak-cache-v1';
 
 const urlsToCache = [
-  '/study-streak-tracker/',
+  '/study-streak-tracker/',              // if deployed under a folder
   '/study-streak-tracker/index.html',
   '/study-streak-tracker/style.css',
   '/study-streak-tracker/script.js',
   '/study-streak-tracker/manifest.json',
+  '/study-streak-tracker/icon.png',
   '/study-streak-tracker/doggo.jpg',
   '/study-streak-tracker/doggo1.jpg'
 ];
+
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
